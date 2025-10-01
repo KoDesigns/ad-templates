@@ -1,0 +1,104 @@
+r<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Adform 300x250</title>
+    <meta name="ad.size" content="width=300,height=250" />
+    <meta name="viewport" content="width=300,initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 300px;
+        height: 250px;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        background-color: #050505;
+        color: #f7fafc;
+      }
+
+      .banner {
+        width: 100%;
+        height: 100%;
+        background: #101624;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .click-area {
+        width: 100%;
+        height: 100%;
+        padding: 14px;
+        border: none;
+        background: transparent;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 10px;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .logo {
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 0.12em;
+      }
+
+      .copy {
+        display: grid;
+        gap: 6px;
+      }
+
+      .headline {
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 1.1;
+      }
+
+      .support {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .cta {
+        justify-self: start;
+        padding: 8px 16px;
+        background: #3cf;
+        color: #050505;
+        font-weight: bold;
+        border-radius: 999px;
+      }
+    </style>
+    <script>
+      (function () {
+        var clickArea = document.getElementById("click-area");
+        if (!clickArea) return;
+        var clickTag = (function () {
+          var params = new URLSearchParams(window.location.search);
+          return params.get("clickTag") || params.get("clicktag") || "about:blank";
+        })();
+        clickArea.addEventListener("click", function (event) {
+          event.preventDefault();
+          window.open(clickTag, "_blank");
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="banner" class="banner" role="banner" aria-label="Display ad">
+      <button id="click-area" class="click-area" type="button" aria-label="Open landing page">
+        <div class="logo">LOGO</div>
+        <div class="copy">
+          <p class="headline">Adform Headline</p>
+          <p class="support">Secondary copy sits here.</p>
+        </div>
+        <div class="cta">CTA</div>
+      </button>
+    </div>
+  </body>
+</html>
+

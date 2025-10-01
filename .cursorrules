@@ -1,0 +1,9 @@
+rules:
+  - scope: project
+    matches:
+      - "**"
+    directives:
+      - "Follow Google DV360 HTML5 creative guidelines for assets and click handling"
+      - "Respect Adform HTML5 manifest requirements and clickTag implementation"
+      - "Use Xandr/AppNexus IAB clickTag standard when building banners"
+

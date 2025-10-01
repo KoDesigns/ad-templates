@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Google 300x250</title>
+    <meta name="ad.size" content="width=300,height=250" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 300px;
+        height: 250px;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+      }
+
+      .ad {
+        width: 100%;
+        height: 100%;
+      }
+
+      .click-area {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 12px;
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: #222;
+      }
+
+      .logo {
+        font-weight: bold;
+        letter-spacing: 0.12em;
+        font-size: 14px;
+      }
+
+      .message {
+        display: grid;
+        gap: 6px;
+      }
+
+      .headline {
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 1.1;
+      }
+
+      .body {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.75);
+      }
+
+      .cta {
+        align-self: flex-start;
+        padding: 6px 14px;
+        background: #0ff;
+        color: #111;
+        font-weight: bold;
+        border-radius: 999px;
+      }
+    </style>
+    <script>
+      (() => {
+        const validTargets = new Set(["_blank", "_top", "_self"]);
+        const params = new URLSearchParams(window.location.search);
+        const clickTag = params.get("clickTag") || params.get("clicktag") || "about:blank";
+        const target = params.get("target") || "_blank";
+        const safeTarget = validTargets.has(target) ? target : "_blank";
+        const clickArea = document.getElementById("click-area");
+        if (!clickArea) return;
+        clickArea.addEventListener("click", (event) => {
+          event.preventDefault();
+          const exitUrl = encodeURI(clickTag);
+          window.open(exitUrl, safeTarget);
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="ad" class="ad" role="banner" aria-label="Display ad">
+      <a id="click-area" class="click-area" href="#" aria-label="Open landing page">
+        <div class="content">
+          <div class="logo">LOGO</div>
+          <div class="message">
+            <p class="headline">Bold headline</p>
+            <p class="body">Secondary line for increased clarity.</p>
+          </div>
+          <div class="cta" role="button" aria-label="Call to action">CTA</div>
+        </div>
+      </a>
+    </div>
+  </body>
+</html>

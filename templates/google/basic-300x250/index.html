@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Google 300x250</title>
+    <meta name="viewport" content="width=300,initial-scale=1" />
     <meta name="ad.size" content="width=300,height=250" />
     <style>
       * {
@@ -32,6 +33,7 @@
         height: 100%;
         text-decoration: none;
         color: inherit;
+        cursor: pointer;
       }
 
       .content {
@@ -80,29 +82,56 @@
       (() => {
         const validTargets = new Set(["_blank", "_top", "_self"]);
         const params = new URLSearchParams(window.location.search);
-        const clickTag = params.get("clickTag") || params.get("clicktag") || "about:blank";
+        const clickTagParam =
+          params.get("clickTag") ||
+          params.get("clicktag") ||
+          params.get("clickTAG") ||
+          "about:blank";
         const target = params.get("target") || "_blank";
         const safeTarget = validTargets.has(target) ? target : "_blank";
         const clickArea = document.getElementById("click-area");
         if (!clickArea) return;
-        clickArea.addEventListener("click", (event) => {
+
+        const resolveExitUrl = () => {
+          try {
+            const url = decodeURIComponent(clickTagParam);
+            return /^https?:\/\//i.test(url) ? url : "about:blank";
+          } catch (error) {
+            return "about:blank";
+          }
+        };
+
+        const handleNavigate = (event) => {
           event.preventDefault();
-          const exitUrl = encodeURI(clickTag);
-          window.open(exitUrl, safeTarget);
+          window.open(resolveExitUrl(), safeTarget);
+        };
+
+        clickArea.addEventListener("click", handleNavigate);
+        clickArea.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            handleNavigate(event);
+          }
         });
       })();
     </script>
   </head>
   <body>
     <div id="ad" class="ad" role="banner" aria-label="Display ad">
-      <a id="click-area" class="click-area" href="#" aria-label="Open landing page">
+      <a
+        id="click-area"
+        class="click-area"
+        href="#"
+        role="button"
+        aria-label="Open landing page"
+        tabindex="0"
+      >
         <div class="content">
           <div class="logo">LOGO</div>
           <div class="message">
             <p class="headline">Bold headline</p>
             <p class="body">Secondary line for increased clarity.</p>
           </div>
-          <div class="cta" role="button" aria-label="Call to action">CTA</div>
+          <div class="cta" role="presentation">CTA</div>
         </div>
       </a>
     </div>
